@@ -46,7 +46,6 @@ export class AppComponent implements OnInit {
 
     logout() {
         this.store.dispatch(logoutAction());
-        this.router.navigateByUrl("/login");
     }
 
 }
