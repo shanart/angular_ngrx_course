@@ -19,6 +19,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { metaReducers, reducers } from './reducers';
 import { AuthGuard } from './auth/auth.guard';
 import { EffectsModule } from '@ngrx/effects';
+import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store';
 
 
 const routes: Routes = [
@@ -32,7 +33,6 @@ const routes: Routes = [
         redirectTo: '/'
     }
 ];
-
 
 
 @NgModule({
@@ -51,9 +51,20 @@ const routes: Routes = [
         MatListModule,
         MatToolbarModule,
         AuthModule.forRoot(),
-        StoreModule.forRoot(reducers, { metaReducers }),
+        StoreModule.forRoot(
+            reducers, 
+            {
+                metaReducers, 
+                runtimeChecks: {
+                    strictActionImmutability: true,
+                    strictActionSerializability: true,
+                    strictStateSerializability: true
+                }
+            }
+        ),
         StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-        EffectsModule.forRoot([])
+        EffectsModule.forRoot([]),
+        StoreRouterConnectingModule.forRoot({stateKey: "router", routerState: RouterState.Minimal })
     ],
     bootstrap: [AppComponent]
 })

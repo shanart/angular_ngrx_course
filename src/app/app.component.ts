@@ -4,7 +4,8 @@ import { Observable } from "rxjs";
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { AppState } from './reducers';
 import { isLoggedIn, isLoggedOut } from './auth/auth.selectors';
-import { logoutAction } from './auth/auth.actions';
+import { loginAction, logoutAction } from './auth/auth.actions';
+import { JsonPipe } from '@angular/common';
 
 @Component({
     selector: 'app-root',
@@ -22,6 +23,12 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
+
+        const userProfile = localStorage.getItem("user");
+        if (userProfile) {
+            this.store.dispatch(loginAction({user: JSON.parse(userProfile)}));
+        }
+
         this.router.events.subscribe(event => {
             switch (true) {
                 case event instanceof NavigationStart: {
