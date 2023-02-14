@@ -12,6 +12,7 @@ export class CoursesDataService extends DefaultDataService<Course> {
     }
 
     getAll(): Observable<Course[]> {
+        // can replace with http CoursesService
         return this.http.get('/api/courses').pipe(
             map(res => res['payload'])
         );
