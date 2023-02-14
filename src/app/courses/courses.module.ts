@@ -21,10 +21,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule, Routes } from '@angular/router';
-import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
-import { CoursesDataService } from './services/courses-data.service';
-import { CourseEntityService } from './services/course-entity.service';
-import { CoursesResolver } from './services/courses.resolver';
+import { CoursesResolver } from './courses.resolver';
+import { EffectsModule } from '@ngrx/effects';
+import { CoursesEffects } from './courses.effects';
+import { StoreModule } from '@ngrx/store';
+import { coursesReducer } from './reducers/course.reducers';
 
 
 export const coursesRoutes: Routes = [
@@ -37,18 +38,10 @@ export const coursesRoutes: Routes = [
     },
     {
         path: ':courseUrl',
-        component: CourseComponent,
-        resolve: {
-            courses: CoursesResolver
-        }
+        component: CourseComponent
     }
 ];
 
-const entityMetadata: EntityMetadataMap = {
-    Course: {
-        
-    }
-};
 
 @NgModule({
     imports: [
@@ -68,7 +61,9 @@ const entityMetadata: EntityMetadataMap = {
         MatDatepickerModule,
         MatMomentDateModule,
         ReactiveFormsModule,
-        RouterModule.forChild(coursesRoutes)
+        RouterModule.forChild(coursesRoutes),
+        EffectsModule.forFeature([CoursesEffects]),
+        StoreModule.forFeature("courses", coursesReducer)
     ],
     declarations: [
         HomeComponent,
@@ -85,18 +80,11 @@ const entityMetadata: EntityMetadataMap = {
     entryComponents: [EditCourseDialogComponent],
     providers: [
         CoursesHttpService,
-        CourseEntityService,
-        CoursesResolver,
-        CoursesDataService
+        CoursesResolver
     ]
 })
 export class CoursesModule {
-    constructor(
-        private eds: EntityDefinitionService, 
-        private entityDataService: EntityDataService,
-        private coursesDataService: CoursesDataService,
-    ) {
-        eds.registerMetadataMap(entityMetadata);
-        entityDataService.registerService('Course', coursesDataService);
+    constructor() {
+
     }
 }
