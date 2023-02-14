@@ -1,7 +1,7 @@
 import { compareCourses, Course } from "../model/course";
 import { createEntityAdapter, EntityState } from "@ngrx/entity";
-import { createReducer, on } from "@ngrx/store";
-import { CoursesActions } from "../action-types";
+        import { createReducer, on } from "@ngrx/store";
+        import { CoursesActions } from "../action-types";
 
 
 export interface CoursesState extends EntityState<Course> {
