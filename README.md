@@ -1,3 +1,5 @@
+NOTE: This course is more usefull then Maximilian Schwarzmüller in term of using NGRX, RXJS, wich is a little bit outdated I think... 
+
 
 ## Ngrx (with NgRx Data) - The Complete Guide
 
