@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit {
     }
 
     onAddCourse() {
+        console.log("Open course");
         const dialogConfig = defaultDialogConfig();
         dialogConfig.data = {
             dialogTitle: "Create Course",
